@@ -16,17 +16,19 @@ for layer in base_model.layers:
 # Creating the top model (Fully Connected Layers)
 x = base_model.output
 x = Flatten(input_shape=base_model.output_shape[1:])(x)
-x = Dense(4096, activation='relu', kernel_initializer=RandomNormal(stddev=0.0001), bias_initializer=Constant())(x)
+x = Dense(4096, activation='relu')(x)
 x = Dropout(0.5)(x)
-x = Dense(256, activation='relu', kernel_initializer=RandomNormal(stddev=0.0001), bias_initializer=Constant())(x)
+x = Dense(256, activation='relu')(x)
 x = Dropout(0.5)(x)
-prediction = Dense(1, activation='sigmoid', kernel_initializer=RandomNormal(stddev=0.01), bias_initializer=Constant())(x)
+prediction = Dense(1, activation='sigmoid')(x)
 model = Model(inputs=base_model.input, outputs=prediction)
 
 
 model.compile(loss='binary_crossentropy',
               optimizer=optimizers.SGD(lr=0.01,momentum=0.9,decay=0.001),
               metrics=['accuracy'])
+
+model.load_weights()
 
 print("Model Loaded. Model Summary:")
 print(model.summary())

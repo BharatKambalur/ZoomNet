@@ -51,9 +51,10 @@ print(model.summary())
 train_datagen = ImageDataGenerator(
     shear_range=0.2,
     zoom_range=0.2,
-    horizontal_flip=True)
+    horizontal_flip=True,
+    preprocessing_function=preprocess_input())
 
-test_datagen = ImageDataGenerator()
+test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input())
 
 train_generator = train_datagen.flow_from_directory(
     directory='dataset/june_23_2017/train',
