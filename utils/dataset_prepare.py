@@ -117,6 +117,7 @@ processed_data_folder = "D:\Research\ZoomNet\dataset\june_23_2017\processed_imag
 scene_folder_list = [dir for dir in os.listdir(dataset_root_folder) if (dir[0:5] == 'scene')]
 
 for scene in scene_folder_list[6:]:
+    print("Processing Scene: {}".format(scene))
     im_list = [im_name for im_name in os.listdir(dataset_root_folder + "\\" + scene) if (im_name[-3:] == 'png')]
 
     gt_file = open(dataset_root_folder + "\\" + scene + "\\" + "label.txt", "r")
