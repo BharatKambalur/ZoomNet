@@ -6,14 +6,13 @@
 import os
 import cv2
 import numpy as np
-#import sys
 from conf import dataset_conf as C
 
 def process_section(x1, y1, x2, y2, gt_boxes_str):
     global im, im_name, scene, sec_counter, processed_data_folder
 
     roi_height = x2 - x1 + 1
-    roi_width= y2 - y1 + 1
+    roi_width = y2 - y1 + 1
     ##########print roi_height, roi_width
     small_side = int(min([roi_width, roi_height]))
     if small_side >= C.MIN_SHORT_SIDE:
