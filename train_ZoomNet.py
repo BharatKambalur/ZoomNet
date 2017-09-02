@@ -11,7 +11,7 @@ import numpy as np
 from time import time
 
 # Define Batch Size
-batch_size = 32
+batch_size = 512
 
 base_model = VGG16(weights='imagenet', input_shape=(224, 224, 3), include_top=False)
 
@@ -52,9 +52,9 @@ train_datagen = ImageDataGenerator(
     shear_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True,
-    preprocessing_function=preprocess_input())
+    preprocessing_function=preprocess_input)
 
-test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input())
+test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 train_generator = train_datagen.flow_from_directory(
     directory='dataset/june_23_2017/train',
@@ -69,19 +69,21 @@ validation_generator = test_datagen.flow_from_directory(
     class_mode='binary')
 
 # Checkpoint Setup
-filepath="weights/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+filepath="weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
 # Fit the Model
 model.fit_generator(
     generator=train_generator,
-    steps_per_epoch=1000//batch_size,
-    epochs=10,
+    steps_per_epoch=30,
+    epochs=100,
     validation_data=validation_generator,
-    validation_steps=500/batch_size,
+    validation_steps=20,
     callbacks=callbacks_list
 )
+
+model.save_weights('ZoomNet_Weights_100_batch512.hdf5')
 
 # time_image_load_start = time()
 # img_path = 'dog.png'
