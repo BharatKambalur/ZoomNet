@@ -52,3 +52,4 @@ Temporary Items
 # Ignore Dataset used for training and weights generated
 dataset
 *.hdf5
+*.h5
