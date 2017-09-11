@@ -13,7 +13,6 @@ def process_section(x1, y1, x2, y2, gt_boxes_str):
 
     roi_height = x2 - x1 + 1
     roi_width = y2 - y1 + 1
-    ##########print roi_height, roi_width
     small_side = int(min([roi_width, roi_height]))
     if small_side >= C.MIN_SHORT_SIDE:
         o_a_percent = 0
@@ -109,6 +108,20 @@ def process_image(gt_str):
             process_section(points[point_n], s_side_half, points[point_n + 1] - 1, small_side - 1, gt_boxes_str)
 
 
+# Current Configuration expects the following folder structure:
+# ~root_folder~
+# |
+# |- ~scene1
+# |    |- ~something.png <- Currently configured for PNG only. Need to change after first print statement below
+# |    |- ~something_else.png
+# |    |- .....
+# |    |- label.txt <-  Text file in specified format containing "filename: (x1, y1, x2, y2) (x1, y1, x2, y2) ...."
+# |                     where each set of 4 numbers inside the bracket are for one annotated bounding box
+# |
+# |- ~scene2
+# |    |- ...
+# |
+# |- ~scene...
 
 dataset_root_folder = "D:\Research\ZoomNet\dataset\june_23_2017"
 processed_data_folder = "D:\Research\ZoomNet\dataset\june_23_2017\processed_images\\"
