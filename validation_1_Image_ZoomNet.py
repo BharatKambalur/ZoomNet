@@ -28,7 +28,7 @@ model.compile(loss='binary_crossentropy',
               optimizer=optimizers.SGD(lr=0.01,momentum=0.9,decay=0.001),
               metrics=['accuracy'])
 
-model.load_weights('ZoomNet_Weights_100.hdf5')
+model.load_weights('weights/ZoomNet_Weights_100.hdf5')
 
 print("Model Loaded. Model Summary:")
 print(model.summary())
@@ -41,8 +41,18 @@ x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
 x = preprocess_input(x)
 
+
+img_path = 'dataset/june_23_2017/validation/true/scene6_00221_105_T.png'
+img = image.load_img(img_path, target_size=(224, 224))
+y = image.img_to_array(img)
+y = np.expand_dims(y, axis=0)
+y = preprocess_input(y)
+
+
+z = np.concatenate((x,y))
+
 time_forward_pass_start = time()
-preds = model.predict(x)
+preds = model.predict_on_batch(z)
 time_forward_pass_end = time()
 print('Time taken to process 1 image = {}'.format(time_forward_pass_end-time_forward_pass_start))
 # decode the results into a list of tuples (class, description, probability)
