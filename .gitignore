@@ -53,3 +53,6 @@ Temporary Items
 dataset
 *.hdf5
 *.h5
+
+# Ignore Scratch Pad Folder -> Stores Files used to brainstorm new ideas
+ScratchPad
